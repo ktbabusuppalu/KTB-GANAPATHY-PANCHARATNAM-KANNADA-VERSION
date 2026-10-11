@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಗಣಪತಿ ಪಂಚರತ್ನಮ್ ಅರ್ಥ ಸಹಿತ</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 15px;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .password-box {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            border: 1px solid #333;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+        .password-box h2 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .password-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .password-box button {
+            background: linear-gradient(135deg, #ff9933, #ff6600);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+        #main-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            border: 1px solid #333;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 1089px;
+            height: auto;
+            aspect-ratio: 1089 / 597;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 3px solid #ff9933;
+            box-shadow: 0 4px 15px rgba(255,153,51,0.3);
+            display: block;
+            margin: 0 auto;
+        }
+        .audio-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .audio-container audio {
+            width: 100%;
+            max-width: 450px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+        .caption-banner {
+            text-align: center;
+            background: linear-gradient(135deg, #ff9933, #ff6600);
+            color: #000;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(255,153,51,0.4);
+        }
+        .dedication {
+            text-align: center;
+            color: #00ffcc;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .verse-box {
+            background: #2a2a2a;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9933;
+        }
+        .verse-title {
+            color: #ffcc00;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .verse-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            white-space: pre-line;
+            color: #f0f0f0;
+        }
+        .verse-meaning {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #b0c4de;
+            border-top: 1px dashed #444;
+            padding-top: 6px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #ff9933;
+            font-weight: bold;
+            border-top: 1px solid #444;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="password-overlay">
+        <div class="password-box">
+            <h2>ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ</h2>
+            <input type="password" id="passcode" placeholder="ಪಾಸ್‌ವರ್ಡ್ ಟೈಪ್ ಮಾಡಿ" onkeypress="checkEnter(event)">
+            <button onclick="unlockPage()">ಸಲ್ಲಿಸಿ</button>
+            <div id="error-msg" class="error-msg">ತಪ್ಪಾದ ಪಾಸ್‌ವರ್ಡ್. ಮರು ಪ್ರಯತ್ನಿಸಿ!</div>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="container">
+            <div class="caption-banner">ಗಣಪತಿ ಪಂಚರತ್ನಮ್ ಅರ್ಥ ಸಹಿತ</div>
+            
+            <!-- Lord Ganesha Image Display (1089x597 Rectangular Scale) -->
+            <div class="image-container">
+                <img src="https://github.com/ktbabusuppalu/KTB-GANAPATHYPANCHA-RATNAM-TELUGU-VERSION/blob/main/TELUGUGP%20IMAGE%20PRINT.png?raw=true" alt="Ganapathy Pancharatnam Print">
+            </div>
+
+            <!-- Audio Player connected via GitHub Raw Link -->
+            <div class="audio-container">
+                <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #ffcc00;">ಪಂಚರತ್ನ ಆಡಿಯೋ ಕೇಳಿ:</p>
+                <audio controls preload="metadata">
+                    <source src="https://github.com/ktbabusuppalu/KTB-GANAPATHYPANCHA-RATNAM-TELUGU-VERSION/raw/main/TELUGU%20GANAPATHY%20PANCHARATNAM.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <h1>ಶ್ರೀ ಗಣೇಶ ಪಂಚರತ್ನಮ್</h1>
+            <div class="dedication">ಕನ್ನಡಿಗರಿಗೆ ಸಮರ್ಪಿತ</div>
+
+            <div class="verse-box">
+                <div class="verse-title">ಮೊದಲನೆಯ ಪದ್ಯ</div>
+                <div class="verse-text">ಕೈಯಲ್ಲಿ ಮೋದಕವ ಧರಿಸಿದ ಹಸ್ತದವನೆ, ಮುಕ್ತಿಯನ್ನು ಹಾಗೂ ಆನಂದವನ್ನು ಕರುಣಿಸುವವನೆ!
+
+ಚಂದ್ರಕಲಾಧರನೆ, ಸಜ್ಜನರ ರಕ್ಷಕನೆ, ವಿನಾಯಕನೇ, ನಿನ್ನ ಚರಣಗಳಿಗೆ ಶರಣು ಕೋರುತ್ತೇನೆ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ಕೈಯಲ್ಲಿ ಮೋದಕವನ್ನು ಹಿಡಿದಿರುವವನು, ಮೋಕ್ಷವನ್ನು ಹಾಗೂ ಆನಂದವನ್ನು ಕರುಣಿಸುವವನು, ತಲೆಯ ಮೇಲೆ ಚಂದ್ರಕಲೆಯನ್ನು ಧರಿಸಿರುವವನು ಮತ್ತು ಸಜ್ಜನರನ್ನು ರಕ್ಷಿಸುವ ವಿನಾಯಕನೇ, ನಿನ್ನ ಚರಣಗಳಿಗೆ ಶರಣು ಕೋರುತ್ತೇನೆ.</div>
+            </div>
+
+            <div class="verse-box">
+                <div class="verse-title">ಎರಡನೆಯ ಪದ್ಯ</div>
+                <div class="verse-text">ಅಧರ್ಮದಲ್ಲಿ ನಡೆಯುವವರಿಗೆ ಭಯವನ್ನುಂಟುಮಾಡುವವನೆ, ಉದಯಿಸುವ ಸೂರ್ಯನಂತೆ ಬೆಳಗುವವನೆ!
+
+ದೇವತೆಗಳ ವಿಘ್ನಗಳನ್ನು ನಿವಾರಿಸುವ ವಿಘ್ನೇಶನೆ, ಮಹೇಶ್ವರನ ಪುತ್ರನೇ, ನಿನ್ನನ್ನು ಸದಾ ಮನಸ್ಸಿನಲ್ಲಿ ಸ್ಮರಿಸುತ್ತೇನೆ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ಅಧರ್ಮದ ಹಾದಿಯಲ್ಲಿ ನಡೆಯುವವರಿಗೆ ಭಯವನ್ನುಂಟುಮಾಡುವವನು, ಉದಯಿಸುವ ಸೂರ್ಯನಂತೆ ತೇಜಸ್ಸಿನಿಂದ ಬೆಳಗುವವನು, ದೇವತೆಗಳ ವಿಘ್ನಗಳನ್ನು ನಿವಾರಿಸುವವನು ಮತ್ತು ಮಹೇಶ್ವರನ ಪುತ್ರನಾದ ಗಣೇಶನನ್ನು ಸದಾ ಮನಸ್ಸಿನಲ್ಲಿ ಸ್ಮರಿಸುತ್ತೇನೆ.</div>
+            </div>
+
+            <div class="verse-box">
+                <div class="verse-title">ಮೂರನೆಯ ಪದ್ಯ</div>
+                <div class="verse-text">ಸಮಸ್ತ ಲೋಕಗಳ ಶಾಂತಿಯನ್ನು ಬಯಸುವವನೆ, ಮದವೇರಿದ ಆನೆಯಂತಹ ರಾಕ್ಷಸರನ್ನು ಸಂಹರಿಸುವವನೆ!
+
+ವಿಶಾಲವಾದ ಉದರವುಳ್ಳವನೆ, ಪರಿಶುದ್ಧ ಗುಣಗಳ ನಿಧಿಯಾಗಿ ಪ್ರಕಾಶಿಸುವ ಆ ದೇವರನ್ನು ಪ್ರಾರ್ಥಿಸುತ್ತೇನೆ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ಸಮಸ್ತ ಲೋಕಗಳ ಶಾಂತಿಯನ್ನು ಬಯಸುವವನು, ಮದವೇರಿದ ಆನೆಯಂತಹ ರಾಕ್ಷಸರನ್ನು ಸಂಹರಿಸುವವನು, ವಿಶಾಲವಾದ ಉದರವುಳ್ಳವನು ಮತ್ತು ಪರಿಶುದ್ಧ ಗುಣಗಳ ನಿಧಿಯಾಗಿ ಪ್ರಕಾಶಿಸುವ ಆ ದೇವರನ್ನು ಪ್ರಾರ್ಥಿಸುತ್ತೇನೆ.</div>
+            </div>
+
+            <div class="verse-box">
+                <div class="verse-title">ನಾಲ್ಕನೆಯ ಪದ್ಯ</div>
+                <div class="verse-text">ದೀನರ ಆರ್ತಿಗಳನ್ನು ಪರಿಹರಿಸುವ ದೇವನೇ, ವೇದ-ಶಾಸ್ತ್ರಗಳಿಂದ ತಿಳಿಯಲ್ಪಡುವವನೇ!
+
+ಈಶ್ವರನ ಪುತ್ರನೇ, ಇಲವೇಲ್ಪೇ, ಗಜಮುಖನೇ, ನಮ್ಮ ಮನಸ್ಸಿನಲ್ಲಿ ಸದಾ ಆನಂದವನ್ನುಂಟುಮಾಡಲಿ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ದೀನರ ಕಷ್ಟಗಳನ್ನು ಪರಿಹರಿಸುವ ದೇವನು, ವೇದ ಮತ್ತು ಶಾಸ್ತ್ರಗಳಿಂದ ತಿಳಿಯಲ್ಪಡುವವನು, ಈಶ್ವರನ ಪುತ್ರನಾದ ಗಜಮುಖನು ನಮ್ಮ ಮನಸ್ಸಿನಲ್ಲಿ ಸದಾ ಆನಂದವನ್ನುಂಟುಮಾಡಲಿ.</div>
+            </div>
+
+            <div class="verse-box">
+                <div class="verse-title">ಐದನೆಯ ಪದ್ಯ</div>
+                <div class="verse-text">ಕಾಂತಿಯುತವಾದ ದಂತದಿಂದ ಸುಂದರವಾದ ದೇಹವುಳ್ಳವನೆ, ಅನಂತ ರೂಪಗಳಿಂದ ಅಡೆತಡೆಗಳನ್ನು ನಿವಾರಿಸುವವನೆ!
+
+ಯೋಗಿಗಳ ಹೃದಯದಲ್ಲಿ ಸದಾ ನೆಲೆಸಿರುವ ಏಕದಂತನನ್ನು ನಾನು ನಿತ್ಯವೂ ಧ್ಯಾನಿಸುತ್ತೇನೆ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ಕಾಂತಿಯುತವಾದ ದಂತದಿಂದ ಸುಂದರವಾದ ದೇಹವುಳ್ಳವನು, ಅನಂತ ರೂಪಗಳಿಂದ ಅಡೆತಡೆಗಳನ್ನು ನಿವಾರಿಸುವವನು ಮತ್ತು ಯೋಗಿಗಳ ಹೃದಯದಲ್ಲಿ ಸದಾ ನೆಲೆಸಿರುವ ಏಕದಂತನನ್ನು ನಾನು ನಿತ್ಯವೂ ಧ್ಯಾನಿಸುತ್ತೇನೆ.</div>
+            </div>
+
+            <div class="verse-box">
+                <div class="verse-title">ಫಲಶ್ರುತಿ</div>
+                <div class="verse-text">ಭಕ್ತಿಯಿಂದ ಈ ಪಂಚರತ್ನ ಸ್ತೋತ್ರವನ್ನು ಪ್ರತಿದಿನ ಪಠಿಸಿ ಗಣೇಶನನ್ನು ಸ್ಮರಿಸುವವರು—
+
+ಆರೋಗ್ಯ, ಆಯುಷ್ಯ, ಐಶ್ವರ್ಯ ಮತ್ತು ಸಂಪತ್ತನ್ನು ಶೀಘ್ರದಲ್ಲೇ ಸತ್ಯವಾಗಿ ಪಡೆದುಕೊಳ್ಳುತ್ತಾರೆ!</div>
+                <div class="verse-meaning"><strong>ಅರ್ಥ:</strong> ಭಕ್ತಿಯಿಂದ ಈ ಪಂಚರತ್ನ ಸ್ತೋತ್ರವನ್ನು ಪ್ರತಿದಿನ ಪಠಿಸಿ ಗಣೇಶನನ್ನು ಸ್ಮರಿಸುವವರು ಶೀಘ್ರದಲ್ಲೇ ಆರೋಗ್ಯ, ಆಯುಷ್ಯ, ಐಶ್ವರ್ಯ ಮತ್ತು ಸಂಪತ್ತನ್ನು ನಿಶ್ಚಿತವಾಗಿ ಪಡೆದುಕೊಳ್ಳುತ್ತಾರೆ.</div>
+            </div>
+
+            <div class="footer">
+                ಸಹೋದರಿಯರಾದ ರೇಖಾ, ಲತಾ ಮತ್ತು ಪ್ರಮೀಳಾ ಅವರಿಂದ.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "Ganesha123";
+
+        function unlockPage() {
+            const enteredPass = document.getElementById("passcode").value;
+            const errorMsg = document.getElementById("error-msg");
+
+            if (enteredPass === correctPassword) {
+                document.getElementById("password-overlay").style.display = "none";
+                document.getElementById("main-content").style.display = "flex";
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                unlockPage();
+            }
+        }
+    </script>
+</body>
+</html>
